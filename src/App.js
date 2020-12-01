@@ -9,8 +9,10 @@ import Error from "./pages/Error";
 import Books from "./pages/Books";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Success from "./pages/Success";
 import BookDetails from "./pages/BookDetails";
 import Admin from './pages/Admin';
+import Car from "./pages/Car";
 
 // Components
 import Header from "./components/Header"
@@ -30,6 +32,7 @@ const App = () => {
         </Route>
         <Route path="/cart">
           <Cart />
+          <Car />
         </Route>
         <Route path="/checkout">
           <Checkout />
@@ -43,6 +46,9 @@ const App = () => {
         </Route>
         <Route path="/admin">
           <Admin />
+        </Route>
+        <Route path="/success">
+          <Success />
         </Route>
         <Route path="*">
           <Error />

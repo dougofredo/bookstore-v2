@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
+import Popfred from "../components/Popfred";
 
 import { BookContext } from "../context/books";
 
@@ -12,6 +13,7 @@ const Home = () => {
     return (
         <>
             <Hero />
+            <Popfred />
             <section className="featured">
                 <header className="featured-head">
                     <h3>Featured Collection</h3>

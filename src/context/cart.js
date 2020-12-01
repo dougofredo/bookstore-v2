@@ -5,6 +5,12 @@ const CartContext = React.createContext();
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
+  // useEffect(() => {
+  //   let localCart = JSON.parse(localStorage.getItem("cart"));
+  //   console.log("LOCAL CART",localCart)
+  //   setCart(localCart);
+  //   console.log("In effect");
+  // }, []);
 
   useEffect(() => {
     const total = [...cart].reduce((total, { amount, price }) => {
@@ -17,6 +23,8 @@ const CartProvider = ({ children }) => {
     const updatedCart = [...cart].map((item) => {
       return item.id === id ? { ...item, amount: item.amount + 1 } : item;
     });
+    console.log("saving locally new qty");
+    localStorage.setItem("cart", JSON.stringify(updatedCart))
     setCart(updatedCart);
   };
 
@@ -29,6 +37,8 @@ const CartProvider = ({ children }) => {
         return item.id === id ? { ...item, amount: item.amount - 1 } : item;
       });
     }
+    console.log("saving locally new qty");
+    localStorage.setItem("cart", JSON.stringify(updatedCart))
     setCart(updatedCart);
   };
 
@@ -39,8 +49,13 @@ const CartProvider = ({ children }) => {
       increaseAmount(id);
     } else {
       const cartItems = [...cart, { id, title, image, price, amount: 1 }];
+      // let localCart = JSON.parse(cartItems);
+      console.log("saving locally");
+      localStorage.setItem("cart", JSON.stringify(cartItems))
       setCart(cartItems);
     }
+
+
   };
 
   const clearCart = () => {

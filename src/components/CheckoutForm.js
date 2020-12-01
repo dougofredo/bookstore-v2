@@ -30,12 +30,20 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const history = useHistory();
+  const [busy,setBusy] = useState(0);
 
   useEffect(() => {
+    console.log("busy",busy);
     if (orderDetails.token) {
-      checkout(orderDetails);
-      //clearCart();
-      //history.push("/");
+      console.log(orderDetails);
+      checkout(orderDetails).then((res) => {
+          console.log("checkout done");
+          clearCart();
+          history.push("/cart");
+     })
+     .catch((err) => {
+     });
+
     }
   }, [orderDetails]);
 
@@ -51,17 +59,25 @@ const CheckoutForm = () => {
   // Handle form submission.
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const card = elements.getElement(CardElement);
-    const result = await stripe.createToken(card);
-    if (result.error) {
-      // Inform the user if there was an error.
-      setError(result.error.message);
-    } else {
-      setError(null);
-      // Send the token to your server.
-      const token = result.token;
-      setOrderDetails({ ...orderDetails, token: token.id });
-    }
+    if( busy == 0)
+    {
+      setBusy(1);
+      const card = elements.getElement(CardElement);
+      const result = await stripe.createToken(card);
+      if (result.error) {
+        // Inform the user if there was an error.
+        setError(result.error.message);
+        console.log("error form: busy",busy);
+        setBusy(0);
+      } else {
+        setError(null);
+        // Send the token to your server.
+        const token = result.token;
+        setOrderDetails({ ...orderDetails, token: token.id });
+      }
+     } else {
+        console.log("already clicked busy",busy);
+      }
   };
 
   return (

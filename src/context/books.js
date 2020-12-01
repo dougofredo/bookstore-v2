@@ -22,9 +22,12 @@ const BookProvider = ({ children }) => {
     };
     try {
       await API.graphql(graphqlOperation(processOrder, { input: payload }));
+      //** maybe return here the checkout session object
       console.log("Order is successful");
+      return true;
     } catch (err) {
       console.log(err);
+      return false;
     }
   };
 
